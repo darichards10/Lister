@@ -8,17 +8,17 @@ export default function Home() {
   const [lists, setLists] = useState([]);
 
   useEffect(() => {
-    
+
     const fetchLists = async () => {
       try {
-        const response = await fetch('/api/lists/getAll'); 
+        const response = await fetch('/api/lists/getAll');
         if (response.ok) {
           const data = await response.json();
           setLists(data);
         } else {
           throw new Error('Failed to fetch lists');
         }
-      } catch (error) { 
+      } catch (error) {
         console.error(error);
       }
     };
@@ -32,9 +32,9 @@ export default function Home() {
         {lists.map((data, index) => (
           <Card
             key={index}
-            listName={data.name}
+            listName={(data as any).name}
             //author={data.author}
-            createdDate={data.created_at}
+            createdDate={(data as any).created_at}
           />
         ))}
       </div>
