@@ -20,7 +20,7 @@ export const getAllLists = () => {
         console.log(results)
         resolve(results);
       }
-    });
+    }); 
   });
 };
 
