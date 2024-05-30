@@ -1,12 +1,10 @@
-import type { NextApiRequest, NextApiResponse } from 'next'
- 
-type ResponseData = {
-  message: string
-}
- 
-export default function handler(
-  req: NextApiRequest,
-  res: NextApiResponse<ResponseData>
-) {
-  res.status(200).json({ message: 'Hello from Next.js!' })
+import { NextResponse } from 'next/server';
+
+export async function GET() {
+  try {
+    return NextResponse.json({}, { status: 200 }); 
+  } catch (error) {
+    console.error('Error fetching lists:', error);
+    return NextResponse.json({ error: 'Internal Server Error' });
+  }
 }
