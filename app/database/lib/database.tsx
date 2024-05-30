@@ -14,8 +14,10 @@ export const getAllLists = () => {
     const query = 'SELECT * FROM lists';
     pool.query(query, (error, results) => {
       if (error) {
+        console.log(error);
         reject(error);
       } else {
+        console.log(results)
         resolve(results);
       }
     });
