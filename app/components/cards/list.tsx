@@ -2,7 +2,7 @@ import React from 'react';
 import Link from 'next/link';
 import PropTypes from 'prop-types';
 
-const Card = ({ listName, author, createdDate }) => {
+const Card = ({ listName = '', author = '', createdDate =''}) => {
     const formattedListName = encodeURIComponent(listName);
 
     return (
