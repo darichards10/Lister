@@ -1,13 +1,12 @@
 import { NextApiRequest, NextApiResponse } from 'next';
-import { NextResponse } from 'next/server';
 
-export async function GET(req: NextApiRequest, res: NextApiResponse) {
+export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   try {
     const { slug } = req.query; 
    
-    return NextResponse.json({}, { status: 200 }); 
+    return res.status(200).json({}); // Respond with an empty JSON object
   } catch (error) {
     console.error('Error fetching lists:', error);
-    return NextResponse.json({ error: 'Internal Server Error' });
+    return res.status(500).json({ error: 'Internal Server Error' }); // Respond with an error message
   }
 }
