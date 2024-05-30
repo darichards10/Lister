@@ -17,7 +17,7 @@ export default function AccountPage() {
             <h1 className="text-2xl pb-6">Account Page</h1>
             {user ? (
                 <div className="space-y-6">
-                    <img src={user.picture} alt="" />
+                    <img src={user.picture || ''} alt="" />
                     <p>Welcome, {user.name}!</p>
                     <p>Nickname: {user.nickname}</p>
                 </div>
