@@ -10,9 +10,7 @@ export default function List() {
             {user ? (
                 <div>
                     <p>Welcome, {user.name}!</p>
-                    {Object.entries(user).map(([key, value]) => (
-                        <p key={key}>{key}: {value}</p>
-                    ))}
+                    
                 </div>
             ) : (
                 <p>Please log in to view your account.</p>
