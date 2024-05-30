@@ -11,14 +11,13 @@ export default function Home() {
 
     const fetchLists = async () => {
       try {
-        // const response = await fetch('/api/lists/getAll');
-        // if (response.ok) {
-        //   const data = await response.json();
-        //   setLists(data);
-        // } else {
-        //   throw new Error('Failed to fetch lists');
-        // }
-        setLists([]);
+        const response = await fetch('/api/lists/getAll');
+        if (response.ok) {
+          const data = await response.json();
+          setLists(data);
+        } else {
+          throw new Error('Failed to fetch lists');
+        }
       } catch (error) {
         console.error(error);
       }
