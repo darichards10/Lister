@@ -17,7 +17,7 @@ export const getAllLists = () => {
         console.log(error);
         reject(error);
       } else {
-        console.log(results)
+        console.log(results) 
         resolve(results);
       }
     }); 
