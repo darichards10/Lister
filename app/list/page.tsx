@@ -2,17 +2,23 @@
 import { useUser } from '@auth0/nextjs-auth0/client';
 import { useEffect, useState } from 'react';
 import Card from '../components/cards/list';
+import { useRouter } from 'next/router';
 
 export default function List() {
     const { user, error, isLoading } = useUser();
     const [lists, setLists] = useState([]);
-    const [loadingLists, setLoadingLists] = useState(true); 
+    const [loadingLists, setLoadingLists] = useState(true);
+    const router = useRouter();
+
+    const handleCreateList = () => {
+        router.push('/list/create');
+    };
 
     useEffect(() => {
-        if (user) { 
+        if (user) {
             const fetchLists = async () => {
                 try {
-                    const response = await fetch('/api/lists/user/' + user.sub); 
+                    const response = await fetch('/api/lists/user/' + user.sub);
                     if (response.ok) {
                         const data = await response.json();
                         setLists(data);
@@ -22,7 +28,7 @@ export default function List() {
                 } catch (error) {
                     console.error(error);
                 } finally {
-                    setLoadingLists(false); 
+                    setLoadingLists(false);
                 }
             };
 
@@ -32,11 +38,12 @@ export default function List() {
 
     return (
         <div className="container mx-auto px-4 py-2">
-            {isLoading ? ( 
+            {isLoading ? (
                 <p>Loading...</p>
             ) : user ? (
                 <div className="container mx-auto p-4">
-                    <button className="flex-1 bg-orange hover:bg-dark-orange text-white rounded px-4 py-2 ml-4 mb-2">
+                    <button className="flex-1 bg-orange hover:bg-dark-orange text-white rounded px-4 py-2 ml-4 mb-2"
+                        onClick={handleCreateList}>
                         Create List
                     </button>
                     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 md:gap-6 gap-2">
