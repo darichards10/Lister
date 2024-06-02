@@ -8,7 +8,7 @@ export default function List() {
     const { user, error, isLoading } = useUser();
     const [lists, setLists] = useState([]);
     const [loadingLists, setLoadingLists] = useState(true);
-    
+    const router = useRouter(); 
     useEffect(() => {
         if (user) {
             const fetchLists = async () => {
@@ -32,7 +32,6 @@ export default function List() {
     }, [user]);
 
     const handleCreateList = () => {
-        const router = useRouter();
         router.push('/list/create');
     };
 

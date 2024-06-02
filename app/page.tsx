@@ -7,24 +7,24 @@ export default function Home() {
 
   const [lists, setLists] = useState([]);
 
-  useEffect(() => {
+  // useEffect(() => {
 
-    const fetchLists = async () => {
-      try {
-        const response = await fetch('/api/lists/getAll');
-        if (response.ok) {
-          const data = await response.json();
-          setLists(data);
-        } else {
-          throw new Error('Failed to fetch lists');
-        }
-      } catch (error) {
-        console.error(error);
-      }
-    };
+  //   const fetchLists = async () => {
+  //     // try {
+  //     //   const response = await fetch('/api/lists/getAll');
+  //     //   if (response.ok) {
+  //     //     const data = await response.json();
+  //     //     setLists(data);
+  //     //   } else {
+  //     //     throw new Error('Failed to fetch lists');
+  //     //   }
+  //     // } catch (error) {
+  //     //   console.error(error);
+  //     // }
+  //   };
 
-    fetchLists();
-  }, []);
+  //   fetchLists();
+  // }, []);
 
   return (
     <div className="container mx-auto p-4">
