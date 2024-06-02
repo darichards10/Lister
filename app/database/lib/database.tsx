@@ -39,13 +39,13 @@ export const createListWithItems = (userSub: string, title: string, items: strin
             'INSERT INTO lists (owner_sub, name) VALUES (?, ?)',
             [userSub, title]
           );
-          // const listId = listResult.insertId;
+          const listId = listResult.insertId;
 
-          // const itemQueries = items.map(item =>
-          //   connection.promise().query('INSERT INTO list_items (list_id, name) VALUES (?, ?)', [listId, item])
-          // );
+          const itemQueries = items.map(item =>
+            connection.promise().query('INSERT INTO list_items (list_id, name) VALUES (?, ?)', [listId, item])
+          );
 
-          // await Promise.all(itemQueries);
+          await Promise.all(itemQueries);
 
           connection.commit((err) => {
             if (err) {
