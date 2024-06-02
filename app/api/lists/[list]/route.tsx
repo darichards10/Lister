@@ -1,7 +1,7 @@
 import { getList } from '../../../database/lib/database';
 import { NextRequest, NextResponse } from 'next/server';
 
-export async function GET(request: NextRequest, { params }) {
+export async function GET(request: NextRequest, { params }: { params: { list: string } }) {
     const [list, user] = params.list.split('&user_sub=');
 
     if (!list || !user) {

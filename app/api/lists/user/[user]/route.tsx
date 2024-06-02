@@ -1,7 +1,7 @@
 import { getUsersLists } from '../../../../database/lib/database';
 import { NextRequest, NextResponse } from 'next/server';
 
-export async function GET(request: NextRequest, { params }) {
+export async function GET(request: NextRequest, { params }: { params: { user: string } }) {
     const user = params.user;
 
     if (!user) {
