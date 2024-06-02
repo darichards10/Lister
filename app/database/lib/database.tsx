@@ -125,7 +125,6 @@ export const getList = (listName: string, user: string) => {
           );
 
           if (listResult.length === 0) {
-            
             connection.release();
             return resolve([]);
           }
