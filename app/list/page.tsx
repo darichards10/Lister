@@ -8,12 +8,7 @@ export default function List() {
     const { user, error, isLoading } = useUser();
     const [lists, setLists] = useState([]);
     const [loadingLists, setLoadingLists] = useState(true);
-    const router = useRouter();
-
-    const handleCreateList = () => {
-        router.push('/list/create');
-    };
-
+    
     useEffect(() => {
         if (user) {
             const fetchLists = async () => {
@@ -35,6 +30,11 @@ export default function List() {
             fetchLists();
         }
     }, [user]);
+
+    const handleCreateList = () => {
+        const router = useRouter();
+        router.push('/list/create');
+    };
 
     return (
         <div className="container mx-auto px-4 py-2">
