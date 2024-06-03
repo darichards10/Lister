@@ -28,7 +28,7 @@ export default function Home() {
               <span className="ml-2 text-sm text-darkest-orange px-2 py-1 rounded">Coming Soon</span>
             </h3>
             <p className="mt-2">
-              Update your lists on the go. Lister's intuitive interface makes list management a breeze.
+              Update your lists on the go. Lister&apos;s intuitive interface makes list management a breeze.
             </p>
           </div>
 
@@ -48,7 +48,7 @@ export default function Home() {
               <span className="ml-2 text-sm text-darkest-orange px-2 py-1 rounded">Coming Soon</span>
             </h3>
             <p className="mt-2">
-              Share your lists with others, whether they're private or public. Collaboration made easy.
+              Share your lists with others, whether they&apos;re private or public. Collaboration made easy.
             </p>
           </div>
 

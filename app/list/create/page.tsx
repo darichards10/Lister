@@ -61,7 +61,7 @@ export default function List() {
             {user ? (
                 <div>
                     <h1 className="text-2xl font-bold mb-4 text-center">Create a New List</h1>
-                    <p className="text-sm mb-4 text-center">Enter the "," or hit the enter/return ket to quickly add item to list. Click on the item to remove it from the list.</p>
+                    <p className="text-sm mb-4 text-center">Enter the &quot; , &quot; or hit the enter/return key to quickly add item to list. Click on the item to remove it from the list.</p>
                     <div className="flex flex-col items-center gap-4 mb-6">
                         <input
                             type="text"
