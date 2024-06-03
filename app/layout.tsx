@@ -12,7 +12,9 @@ const ShareTech = Share_Tech({
 });
 
 export const metadata: Metadata = {
-  title: "Lister"
+  title: "Lister",
+  description: "Lister is the perfect tool for organizing your life. Create to-do lists, manage projects, and share shopping lists easily."
+
 };
 
 export default function RootLayout({
