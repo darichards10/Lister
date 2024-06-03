@@ -11,7 +11,10 @@ const config: Config = {
       'dark': "#0C0C0C",
       'darkest-orange': "#481E14",
       'dark-orange': "#9B3922",
-      'orange': "#F2613F"
+      'orange': "#F2613F",
+      'black': "#000000",
+      'white': "#FFFFFF",
+      'light-gray': "#D3D3D3"
     },
     extend: {
       backgroundImage: {

@@ -42,7 +42,7 @@ export const createListWithItems = (userSub: string, title: string, items: strin
           const listId = listResult.insertId;
 
           const itemQueries = items.map(item =>
-            connection.promise().query('INSERT INTO list_items (list_id, name) VALUES (?, ?)', [listId, item])
+            connection.promise().query('INSERT INTO list_items (list_id, name, owner_sub) VALUES (?, ?, ?)', [listId, item, userSub])
           );
 
           await Promise.all(itemQueries);
@@ -145,6 +145,159 @@ export const getList = (listName: string, user: string) => {
             }
             connection.release();
             resolve(rows);
+          });
+        } catch (err) {
+          connection.rollback(() => {
+            connection.release();
+            reject(err);
+          });
+        }
+      });
+    });
+  });
+};
+
+export const getItem = (itemId: string, ownerSub: string) => {
+  return new Promise((resolve, reject) => {
+    pool.getConnection((err, connection) => {
+      if (err) return reject(err);
+
+      connection.beginTransaction(async (err) => {
+        if (err) {
+          connection.release();
+          return reject(err);
+        }
+
+        try {
+          const item = await connection.promise().query(
+            'SELECT * FROM list_items WHERE id = ? AND owner_sub = ?',
+            [itemId, ownerSub]
+          );
+
+          connection.commit((err) => {
+            if (err) {
+              return connection.rollback(() => {
+                connection.release();
+                reject(err);
+              });
+            }
+            connection.release();
+            resolve(item);
+          });
+        } catch (err) {
+          connection.rollback(() => {
+            connection.release();
+            reject(err);
+          });
+        }
+      });
+    });
+  });
+};
+
+export const updateItem = (itemId: string, status: string, ownerSub: string) => {
+  return new Promise<void>((resolve, reject) => {
+    pool.getConnection((err, connection) => {
+      if (err) return reject(err);
+
+      connection.beginTransaction(async (err) => {
+        if (err) {
+          connection.release();
+          return reject(err);
+        }
+
+        try {
+          await connection.promise().query(
+            'UPDATE list_items SET status = ? WHERE id = ? AND owner_sub = ?',
+            [status, itemId, ownerSub]
+          );
+
+          connection.commit((err) => {
+            if (err) {
+              return connection.rollback(() => {
+                connection.release();
+                reject(err);
+              });
+            }
+            connection.release();
+            resolve();
+          });
+        } catch (err) {
+          connection.rollback(() => {
+            connection.release();
+            reject(err);
+          });
+        }
+      });
+    });
+  });
+};
+
+export const deleteItem = (itemId: string, ownerSub: string) => {
+  return new Promise<void>((resolve, reject) => {
+    pool.getConnection((err, connection) => {
+      if (err) return reject(err);
+
+      connection.beginTransaction(async (err) => {
+        if (err) {
+          connection.release();
+          return reject(err);
+        }
+
+        try {
+          await connection.promise().query(
+            'DELETE FROM list_items WHERE id = ? AND owner_sub = ?',
+            [itemId, ownerSub]
+          );
+
+          connection.commit((err) => {
+            if (err) {
+              return connection.rollback(() => {
+                connection.release();
+                reject(err);
+              });
+            }
+            connection.release();
+            resolve();
+          });
+        } catch (err) {
+          connection.rollback(() => {
+            connection.release();
+            reject(err);
+          });
+        }
+      });
+    });
+  });
+};
+
+
+export const deleteList = (listName: string, ownerSub: string) => {
+  return new Promise<void>((resolve, reject) => {
+    pool.getConnection((err, connection) => {
+      if (err) return reject(err);
+
+      connection.beginTransaction(async (err) => {
+        if (err) {
+          connection.release();
+          return reject(err);
+        }
+
+        try {
+          await connection.promise().query(
+            'DELETE FROM lists WHERE name = ? AND owner_sub = ?',
+            [listName, ownerSub]
+          );
+
+          connection.commit((err) => {
+            if (err) {
+              return connection.rollback(() => {
+                connection.release();
+                reject(err);
+              });
+            }
+            connection.release();
+            resolve();
           });
         } catch (err) {
           connection.rollback(() => {
