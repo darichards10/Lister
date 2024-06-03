@@ -35,7 +35,6 @@ export default function Home() {
           <div className="bg-dark p-6 rounded-lg shadow-md">
             <h3 className="text-2xl font-semibold text-orange flex items-center">
               Delete Lists
-              <span className="ml-2 text-sm text-darkest-orange px-2 py-1 rounded">Coming Soon</span>
             </h3>
             <p className="mt-2">
               Keep your lists organized by deleting old or unnecessary lists quickly.
