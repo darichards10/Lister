@@ -16,7 +16,6 @@ export const getAllLists = () => {
         console.log(error);
         reject(error);
       } else {
-        console.log(results);
         resolve(results);
       }
     });
@@ -118,7 +117,6 @@ export const getList = (listName: string, user: string) => {
         }
 
         try {
-          console.log(listName, user);
           const [listResult] = await connection.promise().query(
             'SELECT * FROM lists WHERE name = ? AND owner_sub = ?',
             [listName, user]
