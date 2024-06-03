@@ -1,3 +1,5 @@
+USE lister_db;
+
 CREATE TABLE users (
   id SERIAL PRIMARY KEY,
   sub VARCHAR(255) UNIQUE NOT NULL, 
