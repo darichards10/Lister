@@ -41,7 +41,7 @@ export default function List() {
                         href="/list/create">
                         Create List
                     </a>
-                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 md:gap-6 gap-2">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 md:gap-6 gap-2 py-2">
                         {lists.map((data, index) => (
                             <Card
                                 key={index}

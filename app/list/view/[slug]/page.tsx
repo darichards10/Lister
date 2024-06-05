@@ -6,8 +6,10 @@ import { useRouter } from 'next/navigation';
 
 export default function Page({ params }: { params: { slug: string } }) {
   const [list, setList] = useState<any[]>([]);
+  const [newItem, setNewItem] = useState("");
   const [loading, setLoading] = useState(true);
-  const [showDialog, setShowDialog] = useState<{ show: boolean, index: number | null, action: string }>({ show: false, index: null });
+  const [list_id, setList_id] = useState("");
+  const [showDialog, setShowDialog] = useState<{ show: boolean, index: number | null, action: string }>({ show: false, index: null, action:"" });
   const { user } = useUser();
   const router = useRouter();
 
@@ -19,6 +21,7 @@ export default function Page({ params }: { params: { slug: string } }) {
           const response = await fetch(`/api/lists/${params.slug}&user_sub=${user.sub}`);
           if (response.ok) {
             const data = await response.json();
+            setList_id(data[0].list_id)
             setList(data);
           } else {
             throw new Error('Failed to fetch list');
@@ -35,7 +38,7 @@ export default function Page({ params }: { params: { slug: string } }) {
   }, [params.slug, user]);
 
   const handleEdit = () => {
-    // Handle edit
+    setShowDialog({ show: true, index: null, action: 'edit' });
   };
 
   const handleShare = () => {
@@ -55,7 +58,6 @@ export default function Page({ params }: { params: { slug: string } }) {
       const updatedList = [...list];
       updatedList[index].status = 'complete';
       setList(updatedList);
-      console.log(updatedList);
       await fetch(`/api/items/${updatedList[index].id}?owner_sub=${user?.sub}&status=complete`, {
         method: 'PUT',
         headers: {
@@ -87,11 +89,40 @@ export default function Page({ params }: { params: { slug: string } }) {
     }
   };
 
+  const addItem = () => {
+    if (newItem.trim()) {
+      console.log('Adding item', list);
+      setList([...list, {id: 0, list_id: list_id, name: newItem, status: 'new', owner_sub: user?.sub }]);
+      setNewItem("");
+      console.log('Added item', list);
+
+    }
+  };
+
+  const saveList = async () => {
+    try {
+      const response = await fetch(`/api/lists/${params.slug}?owner_sub=${user?.sub}`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(list),
+      });
+      if (response.ok) {
+        setShowDialog({ show: false, index: null, action: 'edit' });
+      } else {
+        throw new Error('Failed to save list');
+      }
+    } catch (error) {
+      console.error('Failed to save list:', error);
+    }
+  };
+
   return (
     <div className="p-6 space-y-4">
-      <div className="flex justify-center md:justify-end space-x-4 md:px-20">
+      <div className="flex justify-center md:justify-end space-x-4">
         <button className="flex-1 bg-orange hover:bg-dark-orange text-white rounded px-4 py-2 max-w-20" onClick={handleDelete}>Delete</button>
-        <button className="flex-1 bg-orange hover:bg-dark-orange text-white rounded px-4 py-2 max-w-20" onClick={handleEdit}>Edit</button>
+        <button className="flex-1 bg-orange hover:bg-dark-orange text-white rounded px-4 py-2 max-w-20" onClick={handleEdit}>Add</button>
         <button className="flex-1 bg-orange hover:bg-dark-orange text-white rounded px-4 py-2 max-w-20" onClick={handleShare}>Share</button>
       </div>
       {loading ? (
@@ -172,7 +203,42 @@ export default function Page({ params }: { params: { slug: string } }) {
           </div>
         </div>
       )}
-
+      {(showDialog.show && showDialog.action === 'edit') && (
+        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
+          <div className="bg-white p-4 rounded shadow-md">
+            <p className="text-dark">Add Item To list</p>
+            <div className="flex flex-col space-y-4">
+              <input
+                type="text"
+                value={newItem}
+                onChange={(e) => setNewItem(e.target.value)}
+                placeholder="New item"
+                className="border border-orange text-black rounded px-4 py-2"
+              />
+              <button
+                onClick={addItem}
+                className="bg-orange hover:bg-dark-orange text-white rounded px-4 py-2"
+              >
+                Add Item
+              </button>
+              <div className="flex justify-around gap-4">
+                <button
+                  onClick={saveList}
+                  className="bg-orange hover:bg-dark-orange text-white rounded px-4 py-2"
+                >
+                  Save
+                </button>
+                <button
+                  onClick={() => setShowDialog({ show: false, index: null, action: 'edit' })}
+                  className="bg-light-gray hover:bg-light-gray rounded px-4 py-2"
+                >
+                  Cancel
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

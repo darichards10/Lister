@@ -307,3 +307,45 @@ export const deleteList = (listName: string, ownerSub: string) => {
     });
   });
 };
+
+
+
+
+export const addItemsToList = (listID: string, userSub: string, items: []) => {
+  return new Promise<void>((resolve, reject) => {
+    pool.getConnection((err, connection) => {
+      if (err) return reject(err);
+
+      connection.beginTransaction(async (err) => {
+        if (err) {
+          connection.release();
+          return reject(err);
+        }
+
+        try {
+          const itemQueries = items.map(item =>
+            connection.promise().query('INSERT INTO list_items (list_id, name, owner_sub) VALUES (?, ?, ?)', [listID, item.name, userSub])
+          );
+
+          await Promise.all(itemQueries);
+
+          connection.commit((err) => {
+            if (err) {
+              return connection.rollback(() => {
+                connection.release();
+                reject(err);
+              });
+            }
+            connection.release();
+            resolve();
+          });
+        } catch (err) {
+          connection.rollback(() => {
+            connection.release();
+            reject(err);
+          });
+        }
+      });
+    });
+  });
+};

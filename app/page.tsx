@@ -5,11 +5,10 @@ export default function Home() {
 
   return (
     <div className="bg-black min-h-screen text-white">
-
       <main className="container mx-auto px-4 py-10">
         <section className="text-center mb-12">
           <p className="mt-4 text-lg">
-            Tthe perfect tool for organizing your life. Whether you need to create a to-do list, manage projects, or share shopping lists, Lister makes it simple and intuitive.
+            The perfect tool for organizing your life. Whether you need to create a to-do list, manage projects, or share shopping lists, Lister makes it simple and intuitive.
           </p>
         </section>
 

@@ -8,8 +8,8 @@ import { useUser } from '@auth0/nextjs-auth0/client';
 export default function Header() {
     const { user, isLoading } = useUser();
     return (
-        <header className="bg-dark text-orange pr-8">
-            <div className="container mx-auto flex justify-between items-center">
+        <header className="bg-dark text-orange">
+            <div className="flex justify-between items-center pr-8">
                 <div className="text-3xl">
                     <Link href="/">
                         <Image src="/clearBg.png" alt="Lister logo" width={150} height={150}>
