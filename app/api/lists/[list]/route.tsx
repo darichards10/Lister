@@ -36,7 +36,6 @@ export async function POST(request: NextRequest, { params, query }: { params: { 
     try {
         let sub = request.nextUrl.searchParams.get("owner_sub") || '';
         let listId = "";
-        // Get the request body
         const body = await request.json();
         for (let item of body) {
             if (item.list_id != null) {
@@ -44,10 +43,8 @@ export async function POST(request: NextRequest, { params, query }: { params: { 
                 break;
             }
         }
-        console.log('Request body:', body);
-        let newItems = body.filter(item => item.status == 'new')
-        console.log('New items:', newItems);
        
+        let newItems = body.filter(item => item.status == 'new')
         await addItemsToList( listId, sub, newItems); 
 
         return NextResponse.json({ status: 200 });

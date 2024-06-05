@@ -9,7 +9,7 @@ export default function Page({ params }: { params: { slug: string } }) {
   const [newItem, setNewItem] = useState("");
   const [loading, setLoading] = useState(true);
   const [list_id, setList_id] = useState("");
-  const [showDialog, setShowDialog] = useState<{ show: boolean, index: number | null, action: string }>({ show: false, index: null, action:"" });
+  const [showDialog, setShowDialog] = useState<{ show: boolean, index: number | null, action: string }>({ show: false, index: null, action: "" });
   const { user } = useUser();
   const router = useRouter();
 
@@ -91,11 +91,8 @@ export default function Page({ params }: { params: { slug: string } }) {
 
   const addItem = () => {
     if (newItem.trim()) {
-      console.log('Adding item', list);
-      setList([...list, {id: 0, list_id: list_id, name: newItem, status: 'new', owner_sub: user?.sub }]);
+      setList([...list, { id: 0, list_id: list_id, name: newItem, status: 'new', owner_sub: user?.sub }]);
       setNewItem("");
-      console.log('Added item', list);
-
     }
   };
 
